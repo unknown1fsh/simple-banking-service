@@ -1,0 +1,90 @@
+{
+  "info": {
+    "_postman_id": "f7e5bc8e-d45e-4e02-a8d7-21796267e8f6",
+    "name": "Bank Account API",
+    "description": "API for managing bank accounts including credit, debit and account details.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Credit Account",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"amount\": 100.00\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/account/v1/credit/{accountNumber}",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "account",
+            "v1",
+            "credit",
+            "{accountNumber}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Debit Account",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"amount\": 50.00\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/account/v1/debit/{accountNumber}",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "account",
+            "v1",
+            "debit",
+            "{accountNumber}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Account Details",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/account/v1/{accountNumber}",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "account",
+            "v1",
+            "{accountNumber}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
