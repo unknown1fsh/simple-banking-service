@@ -20,7 +20,7 @@ Basit bir bankacılık uygulaması. Hesap oluşturma, bakiye kontrolü ve para t
 
 1. **Projeyi klonlayın:**
    ```bash
-   git clone https://github.com/kullaniciadi/bankapp.git
+   git clone https://github.com/unknown1fsh/bankapp.git
 
     MySQL veritabanını oluşturun:
 
@@ -48,13 +48,7 @@ bash
 
     gradle bootRun
 
-MySQL Yedeği
-
-Veritabanı yedeğini almak için:
-
-bash
-
-mysqldump -u root -p bankapp > C:\Users\selim\Desktop\bankapp_full.sql
+DB(script eklenmiştir)
 
 API Testleri
 
