@@ -2,6 +2,8 @@ package com.bankapp.service.impl;
 
 import com.bankapp.entity.BankAccountEntity;
 import com.bankapp.entity.TransactionEntity;
+import com.bankapp.exception.AccountNotFoundException;
+import com.bankapp.exception.InsufficientBalanceException;
 import com.bankapp.repository.BankAccountRepository;
 import com.bankapp.repository.TransactionRepository;
 import com.bankapp.service.BankAccountService;
@@ -34,7 +36,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public BankAccountEntity findByAccountNumber(String accountNumber) {
         return bankAccountRepository.findByAccountNumber(accountNumber)
-            .orElseThrow(() -> new RuntimeException("Account not found"));
+            .orElseThrow(() -> new AccountNotFoundException(accountNumber, null));
     }
 
     @Override
@@ -50,10 +52,11 @@ public class BankAccountServiceImpl implements BankAccountService {
     private String processTransaction(String accountNumber, double amount, boolean isCredit) {
         BankAccountEntity account = findByAccountNumber(accountNumber);
         if (!isCredit && account.getBalance() < amount) {
-            throw new RuntimeException("Insufficient balance");
+            throw new InsufficientBalanceException(account.getBalance(), amount);
         }
         double newBalance = isCredit ? account.getBalance() + amount : account.getBalance() - amount;
         account.setBalance(newBalance);
+        bankAccountRepository.save(account);
         String approvalCode = UUID.randomUUID().toString();
         postTransaction(accountNumber, createTransactionEntity(amount, approvalCode, isCredit));
         return approvalCode;

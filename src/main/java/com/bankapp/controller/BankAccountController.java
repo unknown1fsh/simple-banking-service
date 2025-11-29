@@ -5,6 +5,7 @@ import com.bankapp.model.response.BankAccountResponse;
 import com.bankapp.model.response.TransactionResponse;
 import com.bankapp.entity.BankAccountEntity;
 import com.bankapp.service.BankAccountService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,16 +20,20 @@ public class BankAccountController {
     }
 
     @PostMapping("/credit/{accountNumber}")
-    public ResponseEntity<TransactionResponse> creditAccount(@PathVariable String accountNumber, @RequestBody CreditDebitRequest request) {
-        BankAccountEntity account = bankAccountService.findByAccountNumber(accountNumber);
+    public ResponseEntity<TransactionResponse> creditAccount(
+            @PathVariable String accountNumber, 
+            @Valid @RequestBody CreditDebitRequest request) {
         String approvalCode = bankAccountService.credit(accountNumber, request.getAmount());
+        BankAccountEntity account = bankAccountService.findByAccountNumber(accountNumber);
         return ResponseEntity.ok(new TransactionResponse("OK", approvalCode, account.getBalance()));
     }
 
     @PostMapping("/debit/{accountNumber}")
-    public ResponseEntity<TransactionResponse> debitAccount(@PathVariable String accountNumber, @RequestBody CreditDebitRequest request) {
-        BankAccountEntity account = bankAccountService.findByAccountNumber(accountNumber);
+    public ResponseEntity<TransactionResponse> debitAccount(
+            @PathVariable String accountNumber, 
+            @Valid @RequestBody CreditDebitRequest request) {
         String approvalCode = bankAccountService.debit(accountNumber, request.getAmount());
+        BankAccountEntity account = bankAccountService.findByAccountNumber(accountNumber);
         return ResponseEntity.ok(new TransactionResponse("OK", approvalCode, account.getBalance()));
     }
 
